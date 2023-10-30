@@ -10,6 +10,9 @@ public class Util {
     private static final String password = "root";
     private static final String driver = "com.mysql.cj.jdbc.Driver";
 
+    private Util() {
+    }
+
     public static Connection getConnection() {
         Connection connection = null;
         try {
@@ -21,6 +24,17 @@ public class Util {
             System.err.println("Соединение: не установлено");
         }
         return connection;
+    }
+
+    public static void closeConnection(Connection connection) {
+        if (connection != null) {
+            try {
+                connection.close();
+                System.out.println("! Connection is closed");
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
     }
 }
 
