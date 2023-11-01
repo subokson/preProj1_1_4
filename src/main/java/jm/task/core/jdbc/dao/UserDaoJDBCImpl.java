@@ -12,7 +12,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class UserDaoJDBCImpl implements UserDao {
-  private Connection connection = Util.getConnection();
+    private Connection connection = Util.getConnection();
+
 
     public UserDaoJDBCImpl() {
     }
@@ -47,7 +48,7 @@ public class UserDaoJDBCImpl implements UserDao {
     public void saveUser(String name, String lastName, byte age) {
         try (PreparedStatement preparedStatement = connection
                 .prepareStatement("INSERT INTO newdatabase (name, last_name, age) " +
-                "VALUES (?, ?, ?)")) {
+                        "VALUES (?, ?, ?)")) {
             preparedStatement.setString(1, name);
             preparedStatement.setString(2, lastName);
             preparedStatement.setByte(3, age);
@@ -67,7 +68,7 @@ public class UserDaoJDBCImpl implements UserDao {
     @Override
     public void removeUserById(long id) {
         try (PreparedStatement preparedStatement = connection.prepareStatement("DELETE FROM newdatabase WHERE id = ?")) {
-            connection.setAutoCommit(true   );
+            connection.setAutoCommit(true);
             preparedStatement.setLong(1, id);
 
             preparedStatement.executeUpdate();
@@ -86,7 +87,7 @@ public class UserDaoJDBCImpl implements UserDao {
     public List<User> getAllUsers() {
         List<User> userList = new ArrayList<>();
 
-        try (Statement statement = connection.createStatement()){
+        try (Statement statement = connection.createStatement()) {
             ResultSet resultSet = statement.executeQuery("SELECT * FROM newdatabase");
 
             while (resultSet.next()) {
@@ -98,6 +99,7 @@ public class UserDaoJDBCImpl implements UserDao {
                 userList.add(user);
 
                 System.out.printf("%s с именем – %s добавлен в базу данных", user, name);
+                System.out.println();
             }
         } catch (SQLException e) {
             System.out.println("Не удалось получить данные");
